@@ -48,18 +48,28 @@ const Content = () => {
 
   return (
     <section>
-      <p>{`${resultName} ${resultSurname}'s Page`}</p>
-      <Button onClick={handleCheck}>Check</Button>
-      <ImageBox>
-        <img src={test} />
-      </ImageBox>
-      {!age ? (
-        <StyledError>
-          <p>You by at least 18 years old!</p>
-        </StyledError>
-      ) : (
-        ""
-      )}
+      <div class="container">
+        <div class="row">
+          <div className="col-sm-3"></div>
+          <div className="col-sm-6">
+            <p>{`${resultName} ${resultSurname}'s Page`}</p>
+            <Button className="btn-success" onClick={handleCheck}>
+              Check
+            </Button>
+            <ImageBox className="mx-auto">
+              <img src={test} />
+            </ImageBox>
+            {!age ? (
+              <StyledError>
+                <p>You by at least 18 years old!</p>
+              </StyledError>
+            ) : (
+              ""
+            )}
+          </div>
+          <div className="col-sm-3"></div>
+        </div>
+      </div>
     </section>
   );
 };
