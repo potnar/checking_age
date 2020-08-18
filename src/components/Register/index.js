@@ -34,10 +34,10 @@ class Register extends React.Component {
   }
 
   handleName = (e) => {
-    const letters = /[a-zA-Z - zżźćńółęąśŻŹĆĄŚĘŁÓŃ]/;
+    const letters = /^[a-zA-Z - zżźćńółęąśŻŹĆĄŚĘŁÓŃ]+$/;
 
-    if (e.target.value === "" || letters.test(e.target.value)) {
-      this.setState({ name: e.target.value });
+    if (e.currentTarget.value === "" || letters.test(e.currentTarget.value)) {
+      this.setState({ name: e.currentTarget.value });
       this.setState({ errorName: "" });
     } else {
       this.setState({ errorName: "Invalid character!" });
@@ -54,10 +54,10 @@ class Register extends React.Component {
   };
 
   handleSurname = (e) => {
-    const letters = /[a-zA-Z - zżźćńółęąśŻŹĆĄŚĘŁÓŃ]/;
+    const letters = /^[a-zA-Z - zżźćńółęąśŻŹĆĄŚĘŁÓŃ]+$/;
 
-    if (e.target.value === "" || letters.test(e.target.value)) {
-      this.setState({ surname: e.target.value });
+    if (e.currentTarget.value === "" || letters.test(e.currentTarget.value)) {
+      this.setState({ surname: e.currentTarget.value });
       this.setState({ errorSurname: "" });
     } else {
       this.setState({ errorSurname: "Invalid character!" });
@@ -75,7 +75,7 @@ class Register extends React.Component {
 
   handleAge = (e) => {
     const num = /^[0-9\b]+$/;
-    console.log(this.state.age);
+
     if (e.currentTarget.value === "" || num.test(e.currentTarget.value)) {
       this.setState({ age: e.currentTarget.value });
       this.setState({ errorAge: "" });
@@ -100,7 +100,16 @@ class Register extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-
+    console.log(this.state.name);
+    if (this.state.name === "") {
+      this.setState({ errorName: "You have to provide the name!" });
+    }
+    if (this.state.surname === "") {
+      this.setState({ errorSurname: "You have to provide the surname!" });
+    }
+    if (this.state.age === "") {
+      this.setState({ errorAge: "You have to provide the age!" });
+    }
     if (
       this.state.name !== "" &&
       this.state.surname !== "" &&
@@ -109,15 +118,16 @@ class Register extends React.Component {
       localStorage.setItem("dataName", this.state.name);
       localStorage.setItem("dataSurname", this.state.surname);
       localStorage.setItem("dataAge", this.state.age);
+      console.log("siema");
       this.props.history.push("/content");
     }
   };
   render() {
     return (
       <section>
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit} className="mx-auto">
           <Form.Group as={Row}>
-            <Form.Label column sm="2">
+            <Form.Label column sm="1">
               Name
             </Form.Label>
             <Col sm="5">
@@ -137,7 +147,7 @@ class Register extends React.Component {
             </Col>
           </Form.Group>
           <Form.Group as={Row}>
-            <Form.Label column sm="2">
+            <Form.Label column sm="1">
               Surname
             </Form.Label>
             <Col sm="5">
@@ -157,7 +167,7 @@ class Register extends React.Component {
             </Col>
           </Form.Group>
           <Form.Group as={Row}>
-            <Form.Label column sm="2">
+            <Form.Label column sm="1">
               Age
             </Form.Label>
             <Col sm="5">
@@ -167,6 +177,11 @@ class Register extends React.Component {
                 value={this.state.age}
                 onChange={this.handleAge}
               />
+              <div className="row">
+                <Button className="px-4 mx-auto mt-4" type="submit">
+                  Save
+                </Button>
+              </div>
             </Col>
             <Col sm="5">
               {this.state.errorAge && (
@@ -181,7 +196,6 @@ class Register extends React.Component {
               <p>{this.state.hello}</p>
             </StyledHello>
           }
-          <Button type="submit">Save</Button>
         </Form>
       </section>
     );
