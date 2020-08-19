@@ -61,7 +61,7 @@ const Content = () => {
             </ImageBox>
             {!age ? (
               <StyledError>
-                <p>You by at least 18 years old!</p>
+                <p>You must be at least 18 years old!</p>
               </StyledError>
             ) : (
               ""
